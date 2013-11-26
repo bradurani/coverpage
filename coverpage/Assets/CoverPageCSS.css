@@ -1,0 +1,150 @@
+/* Generic Selectors */
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #222222;
+	background-color: #FFFFFF;
+}
+
+p {
+	width: 80%;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+li.a {
+	list-style-type: none;
+    display: inline;
+	margin: 0px;
+	padding: 0;
+}
+
+li.b {
+    list-style-type: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+	font-family: Impact, Charcoal, sans-serif;
+	font-size: 72px;
+	color: #FF5511;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+h2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 60px;
+	color: #CCCCCC;
+}
+
+h3 {
+	font-family: "Arial Black", Gadget, san-serif;
+	font-size: 14px;
+	color: #222222;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+h4 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #FFFFFF;
+}
+
+h5 {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 14px;
+	color: #222222;
+}
+
+/*************** Pseudo classes *********************/
+
+a:link {
+    color: #222222;
+    text-decoration: none
+}
+
+a:visited {
+	color: #111166;
+	text-decoration: none;
+}
+
+a:hover {
+	font-weight: bold;
+    text-decoration: underline;
+}
+
+ul a:visited {
+	color: #AAAAAA;
+	text-decoration: none;
+}
+
+ul a:hover {
+    text-decoration: underline;
+}
+
+li.a a:link {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+li.a a:visited {
+	color: #00FF00;
+	text-decoration: none;
+}
+
+li.a a:hover {
+	color: #FF5511;
+	text-decoration: none;
+}
+
+/****************** ID's ****************************/
+
+#container {
+	position: absolute;
+	width: 800px;
+}
+
+#header {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width: 300px;
+    height: 100px;
+}
+
+#horizontalMenu {
+    background-color: #444444;
+    width: 800px;
+    height: 40px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+	
+#menu {
+    position: absolute;
+	width: 100px;
+	height: 600px;
+    background-color: #FFFFFF;
+	margin-top: 0px;
+    margin-bottom: 0px;
+	border-right: 1px solid #CCCCCC;
+	font-weight: normal;
+}
+
+#centerDoc {
+    background-color: #FFFFFF;
+	width:	680px;
+    height: 600px;
+	margin-left: 120px;
+}
+
+
+

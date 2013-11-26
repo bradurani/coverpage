@@ -1,0 +1,18 @@
+﻿@using coverpage.Models
+@model MostViewedModel
+@{
+    Layout = "_Layout.cshtml";
+}
+
+
+@foreach(ArticleModel a in Model.Articles)
+{
+    <h3>@a.Headline</h3>
+    <div>
+        <p>
+            @a.ArticleText.Substring(0, 20)
+        </p>
+        <div><a href="/home/article?articleid=@a.Id&language=@Model.Language">Read more...</a></div>
+    </div>
+    <br/>
+}
