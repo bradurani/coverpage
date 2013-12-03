@@ -1,0 +1,16 @@
+﻿@using coverpage.Models
+@model SignInModel
+@{
+    ViewBag.Title = "Accounts";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div>
+    @using(Html.BeginForm("SignIn", "Account"))
+    {
+        @Html.ValidationSummary();
+        @Html.TextBoxFor(m => m.UserName);<br/>
+        @Html.PasswordFor(m => m.Password);<br/>
+        <input type="submit" value="Submit"/>
+    }
+</div>

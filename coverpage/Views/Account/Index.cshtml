@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Accounts";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div>
+    <h3>Accounts</h3>
+    <br/>
+    <ul>
+        <li><a href="@Url.Action("Register", "Account")">Register</a></li>
+        <li><a href="@Url.Action("SignIn", "Account")">Sign In</a></li>
+    </ul>
+</div>
+

@@ -2,7 +2,8 @@
 @model ArticleModel
 
 @{
-    Layout = "_Layout.cshtml";
+    ViewBag.Title = "An Article";
+    Layout = "../Shared/_Layout.cshtml";
 }
 <div>
     <h3>@Model.Headline</h3>

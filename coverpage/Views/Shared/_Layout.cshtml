@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Cover Page New Site</title>
+    <link href="../../assets/CoverPageCSS.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">
+            <a href="@Url.Action("MostViewed","Home")"><h1>CoverPage</h1></a>
+        </div>
+        <div><span class="menuitem"><a href="@Url.Action("Index", "Account")">Accounts</a></span></div>
+        <div id="centerDoc">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>
