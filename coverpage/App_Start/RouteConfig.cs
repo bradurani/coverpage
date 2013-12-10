@@ -25,6 +25,12 @@ namespace coverpage
                 defaults: new { controller = "Home", action = "Article" }
             );
 
+            routes.MapRoute(
+                name: "CommentRoute",
+                url: "comment/{action}",
+                defaults: new { controller = "Comment"}
+            );
+
 
             routes.MapRoute(
                 name: "Default",

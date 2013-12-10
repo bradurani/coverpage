@@ -33,8 +33,12 @@ namespace coverpage.Controllers
                 ModelState.AddModelError("", "Your username or password is invalid");
                 return View(model);
             }
-            else //is a valid user
+            else
+            {
+                Session["logged_in"] = true;
+                Session["name"] = model.UserName;
                 return RedirectToAction("MostViewed", "Home");
+            }
         }
 
         [HttpGet]
@@ -61,5 +65,6 @@ namespace coverpage.Controllers
             return false;
         }
 
+        
     }
 }

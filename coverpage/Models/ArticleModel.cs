@@ -10,5 +10,6 @@ namespace coverpage.Models
         public int Id { get; set; }
         public string ArticleText { get; set; }
         public string Headline { get; set; }
+        public CommentSectionModel CommentSection { get; set; }
     }
 }

@@ -1,0 +1,7 @@
+﻿@using coverpage.Models
+@model List<CommentModel>
+
+@foreach (CommentModel comment in Model)
+{
+    <div><span>@comment.Name :</span><span>@comment.Comment</span></div>
+}

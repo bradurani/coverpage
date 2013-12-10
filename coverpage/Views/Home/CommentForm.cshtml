@@ -1,0 +1,9 @@
+﻿@using coverpage.Models
+@model CommentFormModel
+
+@using(Html.BeginForm("AddComment", "Comment"))
+{
+    @Html.TextBoxFor(m => m.Name)
+    @Html.TextBoxFor(m => m.Comment)
+    <input type="submit" value="Submit"/>
+}

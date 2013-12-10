@@ -1,0 +1,7 @@
+﻿@using coverpage.Models
+@model CommentSectionModel
+
+<h3>Comments:</h3>
+
+@Html.Partial("CommentsView", Model.Comments)
+@Html.Partial("CommentForm", Model.CommentForm)
