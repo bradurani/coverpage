@@ -1,18 +1,18 @@
-﻿@using coverpage.Models
-@model ArticleModel
+﻿@using coverpage.data
+@model Article
 
 @{
     ViewBag.Title = "An Article";
     Layout = "../Shared/_Layout.cshtml";
 }
 <div>
-    <h3>@Model.Headline</h3>
+    <h3>@Model.title</h3>
     <div>
         <p>
-            @Model.ArticleText;
+            @Model.body;
         </p>
     </div>
 </div>
-@Html.Partial("CommentsSectionView", Model.CommentSection.Comments)
+@*@Html.Partial("CommentSectionView", Model.CommentSection)*@
 
        

@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -114,7 +118,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ArticleModel.cs" />
     <Compile Include="Models\CommentFormModel.cs" />
     <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\CommentSectionModel.cs" />
@@ -151,12 +154,6 @@
     <Content Include="Views\Home\MostViewed.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\coverpage.data\coverpage.data.csproj">
-      <Project>{cb3bc221-e8cb-42ed-a53c-9076bbc57472}</Project>
-      <Name>coverpage.data</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +176,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\CommentForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\coverpage.data\coverpage.data.csproj">
+      <Project>{3e7b104a-44ae-4cca-8c03-52fdcb82ac3e}</Project>
+      <Name>coverpage.data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

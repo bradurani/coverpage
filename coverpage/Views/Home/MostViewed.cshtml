@@ -1,11 +1,12 @@
 ﻿@using coverpage.Models
+@using coverpage.data
 @model MostViewedModel
 @{
     Layout = "../Shared/_Layout.cshtml";
 }
 
 
-@foreach(ArticleModel article in Model.Articles)
+@foreach(Article article in Model.Articles)
 {
     <div>
         @if (Model.LoggedIn == true)
@@ -14,19 +15,19 @@
         }
     </div>
     <br/>
-    <h3>@article.Headline</h3>
+    <h3>@article.title</h3>
     <div>
         <p>
-            @article.ArticleText.Substring(0, 100)
+            @article.body.Substring(0, 10)
             ...
         </p>
         
     </div>
     <br/>
     <div>
-    @Html.Partial("CommentSectionView", article.CommentSection)
+    @* @Html.Partial("CommentSectionView", article.CommentSection) *@
 </div>
 <br/>
-<div><a href="@Url.Action("article", new { articleId = article.Id })">Read more &gt;</a></div>
+<div><a href="@Url.Action("article", new { articleId = article.article_id, language = article.language })">Read more &gt;</a></div>
 <hr/>
 }
