@@ -12,24 +12,19 @@ namespace coverpage.data
     using System;
     using System.Collections.Generic;
     
-    public partial class Article
+    public partial class User
     {
-        public Article()
+        public User()
         {
-            this.Comments = new HashSet<Comment>();
             this.Ratings = new HashSet<Rating>();
         }
     
-        public int article_id { get; set; }
-        public string title { get; set; }
-        public string body { get; set; }
-        public System.DateTime date_created { get; set; }
-        public System.DateTime date_updated { get; set; }
-        public string author { get; set; }
-        public string language { get; set; }
-        public int story_id { get; set; }
+        public int user_id { get; set; }
+        public string first_name { get; set; }
+        public string last_name { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
     
-        public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }
     }
 }

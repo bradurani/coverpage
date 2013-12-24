@@ -5,8 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="91448e99a9ad4225b8f8e87bf5d98994" Name="Diagram1">
-        <EntityTypeShape EntityType="CoverPageModel.Article" Width="1.5" PointX="0.75" PointY="0.75" />
-      </Diagram>
+        <EntityTypeShape EntityType="CoverPageModel.Article" Width="1.5" PointX="0.75" PointY="2.375" />
+        <EntityTypeShape EntityType="CoverPageModel.Comment" Width="1.5" PointX="3" PointY="2.5" />
+        <EntityTypeShape EntityType="CoverPageModel.sysdiagram" Width="1.5" PointX="5.75" PointY="5.75" />
+        <EntityTypeShape EntityType="CoverPageModel.User" Width="1.5" PointX="3.75" PointY="7.75" />
+        <AssociationConnector Association="CoverPageModel.FK_Comment_Article" />
+        <EntityTypeShape EntityType="CoverPageModel.Rating" Width="1.5" PointX="6.25" PointY="3.5" />
+        <AssociationConnector Association="CoverPageModel.FK_Rating_Article" />
+        <AssociationConnector Association="CoverPageModel.FK_Rating_User" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

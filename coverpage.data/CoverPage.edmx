@@ -7,19 +7,112 @@
     <Schema Namespace="CoverPageModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Article">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="article_id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="article_id" Type="int" Nullable="false" />
           <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="body" Type="nvarchar(max)" Nullable="false" />
           <Property Name="date_created" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="date_updated" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="author" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="language" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="story_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="body" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="date_created" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="date_modified" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="author" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="article_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="article_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="article_id" Type="int" Nullable="false" />
+          <Property Name="stars" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Comment_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="article_id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="article_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rating_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="article_id" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="article_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rating_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CoverPageModelStoreContainer">
           <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <AssociationSet Name="FK_Comment_Article" Association="Self.FK_Comment_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rating_Article" Association="Self.FK_Rating_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="Rating" EntitySet="Rating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rating_User" Association="Self.FK_Rating_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Rating" EntitySet="Rating" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -27,21 +120,120 @@
       <Schema Namespace="CoverPageModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CoverPageEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Articles" EntityType="CoverPageModel.Article" />
-        </EntityContainer>
+          <EntitySet Name="Comments" EntityType="CoverPageModel.Comment" />
+          <EntitySet Name="sysdiagrams" EntityType="CoverPageModel.sysdiagram" />
+          <EntitySet Name="Users" EntityType="CoverPageModel.User" />
+          <AssociationSet Name="FK_Comment_Article" Association="CoverPageModel.FK_Comment_Article">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <EntitySet Name="Ratings" EntityType="CoverPageModel.Rating" />
+          <AssociationSet Name="FK_Rating_Article" Association="CoverPageModel.FK_Rating_Article">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rating_User" Association="CoverPageModel.FK_Rating_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Article">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="article_id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="article_id" Type="Int32" Nullable="false" />
           <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="date_created" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="date_updated" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="author" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="language" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="article_id" Type="Int32" Nullable="false" />
+          <Property Name="story_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Comments" Relationship="CoverPageModel.FK_Comment_Article" FromRole="Article" ToRole="Comment" />
+          <NavigationProperty Name="Ratings" Relationship="CoverPageModel.FK_Rating_Article" FromRole="Article" ToRole="Rating" />
         </EntityType>
-      </Schema>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="date_created" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="date_modified" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="author" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="article_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="CoverPageModel.FK_Comment_Article" FromRole="Comment" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ratings" Relationship="CoverPageModel.FK_Rating_User" FromRole="User" ToRole="Rating" />
+        </EntityType>
+        <Association Name="FK_Comment_Article">
+          <End Type="CoverPageModel.Article" Role="Article" Multiplicity="1" />
+          <End Type="CoverPageModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="article_id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="article_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="article_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="article_id" Type="Int32" Nullable="false" />
+          <Property Name="stars" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="CoverPageModel.FK_Rating_Article" FromRole="Rating" ToRole="Article" />
+          <NavigationProperty Name="User" Relationship="CoverPageModel.FK_Rating_User" FromRole="Rating" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Rating_Article">
+          <End Type="CoverPageModel.Article" Role="Article" Multiplicity="1" />
+          <End Type="CoverPageModel.Rating" Role="Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="article_id" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="article_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rating_User">
+          <End Type="CoverPageModel.User" Role="User" Multiplicity="1" />
+          <End Type="CoverPageModel.Rating" Role="Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -50,14 +242,58 @@
           <EntitySetMapping Name="Articles">
             <EntityTypeMapping TypeName="CoverPageModel.Article">
               <MappingFragment StoreEntitySet="Article">
-                <ScalarProperty Name="article_id" ColumnName="article_id" />
+                <ScalarProperty Name="story_id" ColumnName="story_id" />
                 <ScalarProperty Name="language" ColumnName="language" />
                 <ScalarProperty Name="author" ColumnName="author" />
                 <ScalarProperty Name="date_updated" ColumnName="date_updated" />
                 <ScalarProperty Name="date_created" ColumnName="date_created" />
                 <ScalarProperty Name="body" ColumnName="body" />
                 <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="article_id" ColumnName="article_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="CoverPageModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="article_id" ColumnName="article_id" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="date_modified" ColumnName="date_modified" />
+                <ScalarProperty Name="date_created" ColumnName="date_created" />
+                <ScalarProperty Name="body" ColumnName="body" />
+                <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="CoverPageModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CoverPageModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="CoverPageModel.Rating">
+              <MappingFragment StoreEntitySet="Rating">
+                <ScalarProperty Name="stars" ColumnName="stars" />
+                <ScalarProperty Name="article_id" ColumnName="article_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -25,7 +25,11 @@
     </div>
     <br/>
     <div>
-    @* @Html.Partial("CommentSectionView", article.CommentSection) *@
+   @foreach(var comment in article.Comments)
+   {
+       <div>@comment.title by @comment.author</div>
+       <div>@comment.body</div>
+   }
 </div>
 <br/>
 <div><a href="@Url.Action("article", new { articleId = article.article_id, language = article.language })">Read more &gt;</a></div>
