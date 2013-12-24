@@ -71,9 +71,6 @@
     <Compile Include="Rating.cs">
       <DependentUpon>CoverPage.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>CoverPage.tt</DependentUpon>
-    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>CoverPage.tt</DependentUpon>
     </Compile>
