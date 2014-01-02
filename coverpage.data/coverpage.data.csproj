@@ -74,6 +74,7 @@
     <Compile Include="User.cs">
       <DependentUpon>CoverPage.tt</DependentUpon>
     </Compile>
+    <Compile Include="validationmodels\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="CoverPage.edmx">

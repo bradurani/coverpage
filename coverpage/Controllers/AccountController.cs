@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using coverpage.Models;
+using coverpage.data;
 
 namespace coverpage.Controllers
 {
@@ -27,14 +28,15 @@ namespace coverpage.Controllers
         [HttpPost]
         public ActionResult SignIn(SignInModel model)
         {
-            bool isValid = IsValidUser(model);
-            if (!isValid)
-            {
-                ModelState.AddModelError("", "Your username or password is invalid");
+            if (!ModelState.IsValid)
                 return View(model);
-            }
             else
             {
+                CoverPageEntities context = new CoverPageEntities();
+                string hashedPassword = model.Password.GetHashCode().ToString();
+                User user = context.Users.Where(u => u.email == model.UserName && u.password == hashedPassword).SingleOrDefault();
+                if (user == null)
+                    return View(model);
                 Session["logged_in"] = true;
                 Session["name"] = model.UserName;
                 return RedirectToAction("MostViewed", "Home");
@@ -48,21 +50,28 @@ namespace coverpage.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult Register(User model)
         {
             if(ModelState.IsValid)
             {
-                return RedirectToAction("MostViewed", "Home");
+                model.password = model.password.GetHashCode().ToString();
+                CoverPageEntities context = new CoverPageEntities();
+                context.Users.Add(model);
+                context.SaveChanges();
+                return View("User", model);
             }
-            return View(model);
+            else
+            {
+                return View(model);
+            }
+           
         }
 
-        private bool IsValidUser(SignInModel model)
+        public ActionResult EditAccount()
         {
-            //DATABASE WOULD DO THIS NORMALLY
-            if(model.UserName == "brad" && model.Password == "password")
-                return true;
-            return false;
+            if ((bool)Session["logged_in"] != true)
+                throw new Exception("User not logged in");
+            return View();
         }
 
         

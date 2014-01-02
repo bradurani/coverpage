@@ -122,7 +122,6 @@
     <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\CommentSectionModel.cs" />
     <Compile Include="Models\MostViewedModel.cs" />
-    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\SignInModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -178,13 +177,19 @@
     <Content Include="Views\Home\CommentForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\User.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\coverpage.data\coverpage.data.csproj">
       <Project>{3e7b104a-44ae-4cca-8c03-52fdcb82ac3e}</Project>
       <Name>coverpage.data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <Content Include="Views\Account\EditAccount.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

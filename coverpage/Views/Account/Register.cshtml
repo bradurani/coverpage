@@ -1,5 +1,5 @@
-﻿@using coverpage.Models
-@model RegisterModel
+﻿@using coverpage.data
+@model coverpage.data.User
 
 @{
     ViewBag.Title = "Register";
@@ -10,10 +10,10 @@
 @using(Html.BeginForm("Register", "Account"))
 {
     @Html.ValidationSummary()
-    <span>First Name:</span> @Html.TextBoxFor(m => m.FirstName) @Html.ValidationMessageFor(m => m.FirstName) <br/>
-    <span>Last name:</span>@Html.TextBoxFor(m => m.LastName) @Html.ValidationMessageFor(m => m.LastName)<br/>
-    <span>Email:</span>@Html.TextBoxFor(m => m.Email) @Html.ValidationMessageFor(m => m.Email)<br/>
-    <span>Phone:</span> @Html.TextBoxFor(m => m.Phone) @Html.ValidationMessageFor(m => m.Phone)<br/>
-    <span>Password:</span>@Html.PasswordFor(m => m.Password) @Html.ValidationMessageFor(m => m.Password)<br/>
+    <span>First Name:</span> @Html.TextBoxFor(m => m.first_name) @Html.ValidationMessageFor(m => m.first_name) <br/>
+    <span>Last name:</span>@Html.TextBoxFor(m => m.last_name) @Html.ValidationMessageFor(m => m.last_name)<br/>
+    <span>Email:</span>@Html.TextBoxFor(m => m.email) @Html.ValidationMessageFor(m => m.email)<br/>
+    <span>Phone:</span> @Html.TextBoxFor(m => m.phone) @Html.ValidationMessageFor(m => m.phone)<br/>
+    <span>Password:</span>@Html.PasswordFor(m => m.password) @Html.ValidationMessageFor(m => m.password)<br/>
     <input type="submit" value="Register!"/>
 }

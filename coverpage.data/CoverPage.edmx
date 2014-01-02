@@ -48,6 +48,7 @@
           <Property Name="last_name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <Association Name="FK_Comment_Article">
           <End Role="Article" Type="Self.Article" Multiplicity="1" />
@@ -163,6 +164,7 @@
           <Property Name="email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Ratings" Relationship="CoverPageModel.FK_Rating_User" FromRole="User" ToRole="Rating" />
+          <Property Name="phone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Comment_Article">
           <End Type="CoverPageModel.Article" Role="Article" Multiplicity="1" />
@@ -247,6 +249,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="CoverPageModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="last_name" ColumnName="last_name" />

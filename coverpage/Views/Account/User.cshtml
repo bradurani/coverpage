@@ -1,0 +1,9 @@
+﻿@model coverpage.data.User
+
+@{
+    ViewBag.Title = "User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Thank you for registering @Model.first_name</h2>
+<h3><a href="@Url.Action("Home", "MostViewed")">Go to  >></a></h3>
