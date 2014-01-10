@@ -15,7 +15,7 @@
         }
     </div>
     <br/>
-    <h3>@article.title</h3>
+    <h3 class="article-title">@article.title</h3>@Html.Partial("Like", article)
     <div>
         <p>
             @article.body.Substring(0, 10)

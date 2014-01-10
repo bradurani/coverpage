@@ -17,6 +17,7 @@ namespace coverpage.data
         public User()
         {
             this.Ratings = new HashSet<Rating>();
+            this.Comments = new HashSet<Comment>();
         }
     
         public int user_id { get; set; }
@@ -27,5 +28,6 @@ namespace coverpage.data
         public string phone { get; set; }
     
         public virtual ICollection<Rating> Ratings { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

@@ -12,18 +12,12 @@ namespace coverpage.data
     using System;
     using System.Collections.Generic;
     
-    public partial class Comment
+    public partial class sysdiagram
     {
-        public int id { get; set; }
-        public string title { get; set; }
-        public string body { get; set; }
-        public System.DateTime date_created { get; set; }
-        public System.DateTime date_modified { get; set; }
-        public string author { get; set; }
-        public int article_id { get; set; }
-        public int user_id { get; set; }
-    
-        public virtual Article Article { get; set; }
-        public virtual User User { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

@@ -12,18 +12,10 @@ namespace coverpage.data
     using System;
     using System.Collections.Generic;
     
-    public partial class Comment
+    public partial class Like
     {
-        public int id { get; set; }
-        public string title { get; set; }
-        public string body { get; set; }
-        public System.DateTime date_created { get; set; }
-        public System.DateTime date_modified { get; set; }
-        public string author { get; set; }
-        public int article_id { get; set; }
-        public int user_id { get; set; }
-    
-        public virtual Article Article { get; set; }
-        public virtual User User { get; set; }
+        public int Id { get; set; }
+        public Nullable<int> articleid { get; set; }
+        public Nullable<int> count { get; set; }
     }
 }

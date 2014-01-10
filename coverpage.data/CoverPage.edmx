@@ -29,6 +29,15 @@
           <Property Name="date_modified" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="author" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="article_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Like">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="articleid" Type="int" />
+          <Property Name="count" Type="int" />
         </EntityType>
         <EntityType Name="Rating">
           <Key>
@@ -38,6 +47,16 @@
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="article_id" Type="int" Nullable="false" />
           <Property Name="stars" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -59,6 +78,18 @@
             </Principal>
             <Dependent Role="Comment">
               <PropertyRef Name="article_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -89,10 +120,16 @@
         <EntityContainer Name="CoverPageModelStoreContainer">
           <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Like" EntityType="Self.Like" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <AssociationSet Name="FK_Comment_Article" Association="Self.FK_Comment_Article">
             <End Role="Article" EntitySet="Article" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_User" Association="Self.FK_Comment_User">
+            <End Role="User" EntitySet="User" />
             <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
           <AssociationSet Name="FK_Rating_Article" Association="Self.FK_Rating_Article">
@@ -125,6 +162,12 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Rating" EntitySet="Ratings" />
           </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="CoverPageModel.sysdiagram" />
+          <AssociationSet Name="FK_Comment_User" Association="CoverPageModel.FK_Comment_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <EntitySet Name="Likes" EntityType="CoverPageModel.Like" />
           </EntityContainer>
         <EntityType Name="Article">
           <Key>
@@ -153,6 +196,8 @@
           <Property Name="author" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="article_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Article" Relationship="CoverPageModel.FK_Comment_Article" FromRole="Comment" ToRole="Article" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="CoverPageModel.FK_Comment_User" FromRole="Comment" ToRole="User" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -165,6 +210,7 @@
           <Property Name="password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Ratings" Relationship="CoverPageModel.FK_Rating_User" FromRole="User" ToRole="Rating" />
           <Property Name="phone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Comments" Relationship="CoverPageModel.FK_Comment_User" FromRole="User" ToRole="Comment" />
         </EntityType>
         <Association Name="FK_Comment_Article">
           <End Type="CoverPageModel.Article" Role="Article" Multiplicity="1" />
@@ -213,6 +259,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Comment_User">
+          <End Type="CoverPageModel.User" Role="User" Multiplicity="1" />
+          <End Type="CoverPageModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Like">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="articleid" Type="Int32" />
+          <Property Name="count" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -236,6 +312,7 @@
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="CoverPageModel.Comment">
               <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="article_id" ColumnName="article_id" />
                 <ScalarProperty Name="author" ColumnName="author" />
                 <ScalarProperty Name="date_modified" ColumnName="date_modified" />
@@ -264,6 +341,26 @@
                 <ScalarProperty Name="stars" ColumnName="stars" />
                 <ScalarProperty Name="article_id" ColumnName="article_id" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="CoverPageModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Likes">
+            <EntityTypeMapping TypeName="CoverPageModel.Like">
+              <MappingFragment StoreEntitySet="Like">
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="articleid" ColumnName="articleid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

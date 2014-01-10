@@ -12,6 +12,9 @@
         <EntityTypeShape EntityType="CoverPageModel.Rating" Width="1.5" PointX="6.25" PointY="3.5" />
         <AssociationConnector Association="CoverPageModel.FK_Rating_Article" />
         <AssociationConnector Association="CoverPageModel.FK_Rating_User" />
+        <EntityTypeShape EntityType="CoverPageModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" />
+        <AssociationConnector Association="CoverPageModel.FK_Comment_User" />
+        <EntityTypeShape EntityType="CoverPageModel.Like" Width="1.5" PointX="5.375" PointY="6.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

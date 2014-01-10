@@ -31,7 +31,11 @@ namespace coverpage
                 defaults: new { controller = "Comment"}
             );
 
-
+            routes.MapRoute(
+                name: "LikeRoute",
+                url: "ajax/like/",
+                defaults: new {  controller ="Like", action ="Index" }
+            );
             routes.MapRoute(
                 name: "Default",
                 url: "{action}/",

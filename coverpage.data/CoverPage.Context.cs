@@ -29,5 +29,7 @@ namespace coverpage.data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Rating> Ratings { get; set; }
+        public DbSet<sysdiagram> sysdiagrams { get; set; }
+        public DbSet<Like> Likes { get; set; }
     }
 }
